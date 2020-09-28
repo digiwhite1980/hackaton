@@ -28,4 +28,13 @@ In order to dettach data from your docker container a /source folder is mounted 
 This folder maps to a folder in your current working directory: ./data/source.
 There is another folder ./data/root. this folder holds your local bash_history as well as the current token for the azure CLI.
 
+## kube-prompt / bash-completion / kubens and kubectx
+kube-propmt is an interactive shell which has full completion of kubernetes cli commands.
+```
+# kube-prompt
+```
+Besides that, bash completion for kubectl is also included.
 
+kubens and kubectx are also included.
+- kubens (for switching between default namespace)
+- kubectx (for switching between different kubernetes context)
