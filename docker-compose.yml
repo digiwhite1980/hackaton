@@ -1,0 +1,21 @@
+version: '3'
+services:
+  hackaton:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hackaton
+    hostname: hackaton
+    image: hackaton
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./data/root:/root
+      - ./data/source:/source
+      # change desired paths below
+      #- /home/geising/az/root:/root
+      #- /home/geising/ING/terraforming:/data
+    #environment:
+      # - ${TF_VAR_store_acr_name}
+      # - ${TF_VAR_store_acr_password}
+      # - ${TF_VAR_store_acr_url}
