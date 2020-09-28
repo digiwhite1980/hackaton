@@ -8,6 +8,10 @@ Ensure the following software is available on your computer / laptop
 ```
 docker-compose run --service-ports hackaton
 ```
+If you change the Dockerfile to meet your personal preferences don't forget to rebuild the image:
+```
+docker-compose build
+```
 
 ## Azure CLI login
 After starting the container you need to login into wiith the Azure CLI. to do so enter the following command:
