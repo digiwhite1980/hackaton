@@ -37,8 +37,8 @@ kube-propmt is an interactive shell which has full completion of kubernetes cli 
 ```
 # kube-prompt
 ```
-Before using kube-prompt make sure you have a kubeconfig configured. You can configure retreive a kubeconfig by running
-the following command:
+Before using kube-prompt make sure you have a kubeconfig configured. You can retreive a kubeconfig by running
+the following command (a kubernetes cluster needs to be available):
 ```
 az aks get-credentials -n {aks clustername} -g {resourcegroup name}
 ```
