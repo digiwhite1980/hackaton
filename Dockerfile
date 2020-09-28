@@ -43,9 +43,11 @@ ENV HOSTNAME=hackaton
 
 COPY --from=tools /tools /usr/local/bin
 COPY --from=tools /etc/profile.d/bash_completion.sh /etc/profile.d
+COPY --from=tools /usr/share/bash-completion/bash_completion /usr/share/bash-completion/bash_completion
 COPY --from=tools /usr/bin/tput /usr/bin
 COPY bash_prompt.sh /etc/profile.d/bash_prompt.sh
 
-RUN echo "Europe/Amsterdam" >> /etc/timezone
+RUN echo "Europe/Amsterdam" >> /etc/timezone && \
+    echo "source <(kubectl completion bash)" > /etc/profile.d/kube_completion.sh
 
 CMD [ "/bin/bash", "--init-file", "/etc/profile" ]
