@@ -35,7 +35,7 @@ RUN git clone https://github.com/c-bata/kube-prompt.git kube-prompt-repo && \
 
 RUN chmod 755 *
 
-RUN apk add bash-completion
+RUN apk add bash-completion ncurses
 # -----------------------------------------------------------------------------
 FROM base
 
@@ -43,6 +43,7 @@ ENV HOSTNAME=hackaton
 
 COPY --from=tools /tools /usr/local/bin
 COPY --from=tools /etc/profile.d/bash_completion.sh /etc/profile.d
+COPY --from=tools /usr/bin/tput /usr/bin
 COPY bash_prompt.sh /etc/profile.d/bash_prompt.sh
 
 RUN echo "Europe/Amsterdam" >> /etc/timezone
