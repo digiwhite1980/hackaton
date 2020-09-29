@@ -26,6 +26,12 @@ Test your account with the following command
 ```
 az account show
 ```
+If you have multiple subscription make sure to set / activate the right subscription. 
+```
+az account list -o table
+az account set -s {subscriptionId}
+az account list -o table # Check the last column to see if the IsDefault flag is set
+```
 
 ## Source folder in container
 In order to dettach data from your docker container a /source folder is mounted into the docker container. 
