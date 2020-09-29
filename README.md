@@ -35,7 +35,7 @@ az account list -o table # Check the last column to see if the IsDefault flag is
 
 ## Source folder in container
 In order to dettach data from your docker container a /source folder is mounted into the docker container. 
-This folder maps to a folder in your current working directory: ./data/source.
+This folder maps to a folder in your current working directory: ./data/source. Use this folder for retaining data (like git clone)
 There is another folder ./data/root. this folder holds your local bash_history as well as the current token for the azure CLI.
 
 ## kube-prompt / bash-completion / kubens and kubectx
