@@ -4,7 +4,8 @@ FROM base as tools
 
 ENV WORKDIR=/tools
 ENV KUBECTL_VERSION=1.15.8
-ENV HELM_VERSION=2.14.2
+ENV HELM_VERSION=3.3.4
+ENV TERRAFORM_VERSION=0.13.3
 
 RUN mkdir ${WORKDIR}
 WORKDIR ${WORKDIR}
@@ -16,6 +17,13 @@ RUN curl -LO https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     tar zxf helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
 	 mv linux-amd64/helm . && \
 	 rm -fr linux-amd64 helm-v${HELM_VERSION}-linux-amd64.tar.gz
+
+# ---------------------------- terraform 
+RUN curl \
+    --location \
+    --output /tmp/terraform.zip \
+    https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
+    && unzip /tmp/terraform.zip -d .
 
 # ---------------------------- kubectx 
 RUN git clone https://github.com/ahmetb/kubectx.git kubectx_repo && \
