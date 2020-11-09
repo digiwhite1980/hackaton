@@ -6,6 +6,7 @@ ENV WORKDIR=/tools
 ENV KUBECTL_VERSION=1.15.8
 ENV HELM_VERSION=3.3.4
 ENV TERRAFORM_VERSION=0.13.3
+ENV GOTK=0.2.3
 
 RUN mkdir ${WORKDIR}
 WORKDIR ${WORKDIR}
@@ -24,6 +25,11 @@ RUN curl \
     --output /tmp/terraform.zip \
     https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d .
+
+# ---------------------------- Flux v2 gotk
+RUN curl -LO https://github.com/fluxcd/flux2/releases/download/v${GOTK}/flux_${GOTK}_linux_arm.tar.gz && \
+    tar zxf flux_${GOTK}_linux_arm.tar.gz && \
+	 rm flux_${GOTK}_linux_arm.tar.gz
 
 # ---------------------------- kubectx 
 RUN git clone https://github.com/ahmetb/kubectx.git kubectx_repo && \

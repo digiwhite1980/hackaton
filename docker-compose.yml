@@ -10,8 +10,9 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./data/root:/root
-      - ./data/source:/source
+      - ${HOME}/Projects/k8s/root:/root
+      - ${HOME}/Projects/k8s/repo:/source
+      - ${HOME}/.kube/config:/root/.kube/config
       # change desired paths below
       #- /home/geising/az/root:/root
       #- /home/geising/ING/terraforming:/data
