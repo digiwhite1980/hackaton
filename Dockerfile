@@ -3,10 +3,11 @@ FROM mcr.microsoft.com/azure-cli as base
 FROM base as tools
 
 ENV WORKDIR=/tools
-ENV KUBECTL_VERSION=1.15.8
+ENV KUBECTL_VERSION=1.18.8
 ENV HELM_VERSION=3.3.4
 ENV TERRAFORM_VERSION=0.13.3
 ENV GOTK=0.2.3
+ENV KUSTOMIZE=3.8.6
 
 RUN mkdir ${WORKDIR}
 WORKDIR ${WORKDIR}
@@ -31,6 +32,10 @@ RUN curl -LO https://github.com/fluxcd/flux2/releases/download/v${GOTK}/flux_${G
     tar zxf flux_${GOTK}_linux_arm.tar.gz && \
 	 rm flux_${GOTK}_linux_arm.tar.gz
 
+# ---------------------------- Kustomize
+RUN curl -LO https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v${KUSTOMIZE}/kustomize_v${KUSTOMIZE}_linux_amd64.tar.gz && \
+    tar zxf kustomize_v${KUSTOMIZE}_linux_amd64.tar.gz && \
+	 rm kustomize_v${KUSTOMIZE}_linux_amd64.tar.gz
 # ---------------------------- kubectx 
 RUN git clone https://github.com/ahmetb/kubectx.git kubectx_repo && \
     mv kubectx_repo/kubectx . && \

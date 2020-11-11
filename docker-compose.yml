@@ -4,14 +4,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
     container_name: hackaton
     hostname: hackaton
     image: hackaton
     stdin_open: true
     tty: true
     volumes:
-      - ${HOME}/Projects/k8s/root:/root
-      - ${HOME}/Projects/k8s/repo:/source
+      - ${HOME}/Documents/Projects/k8s/root:/root
+      - ${HOME}/Documents/Projects/k8s/repo:/source
+      - ${HOME}/Documents/Projects/k8s/private:/private
       - ${HOME}/.kube/config:/root/.kube/config
       # change desired paths below
       #- /home/geising/az/root:/root
