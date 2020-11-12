@@ -9,6 +9,7 @@ services:
     hostname: hackaton
     image: hackaton
     stdin_open: true
+    network_mode: host
     tty: true
     volumes:
       - ${HOME}/Documents/Projects/k8s/root:/root

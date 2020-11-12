@@ -8,6 +8,7 @@ ENV HELM_VERSION=3.3.4
 ENV TERRAFORM_VERSION=0.13.3
 ENV GOTK=0.2.3
 ENV KUSTOMIZE=3.8.6
+ENV YQ_VERSION=3.4.1
 
 RUN mkdir ${WORKDIR}
 WORKDIR ${WORKDIR}
@@ -36,6 +37,11 @@ RUN curl -LO https://github.com/fluxcd/flux2/releases/download/v${GOTK}/flux_${G
 RUN curl -LO https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v${KUSTOMIZE}/kustomize_v${KUSTOMIZE}_linux_amd64.tar.gz && \
     tar zxf kustomize_v${KUSTOMIZE}_linux_amd64.tar.gz && \
 	 rm kustomize_v${KUSTOMIZE}_linux_amd64.tar.gz
+
+# ---------------------------- yq
+RUN curl -LO https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 && \
+    mv yq_linux_amd64 yq
+
 # ---------------------------- kubectx 
 RUN git clone https://github.com/ahmetb/kubectx.git kubectx_repo && \
     mv kubectx_repo/kubectx . && \
