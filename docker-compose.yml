@@ -13,7 +13,7 @@ services:
     tty: true
     volumes:
       - ${HOME}/Documents/hackaton/root:/root
-      - ${HOME}/Documents/hackaton/repo:/source
+      - ${HOME}/Documents/git:/source
       - ${HOME}/Documents/hackaton/private:/private
       - ${HOME}/.kube/:/root/.kube/
     #environment:
