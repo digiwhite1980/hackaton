@@ -57,12 +57,12 @@ kube_prompt () {
 }
 
 kube_get_context() {
-  K8S_PROMPT_CLUSTER="$(kubectl config view --minify  --output 'jsonpath={..current-context}')"
+  K8S_PROMPT_CLUSTER="$(kubectl config view --minify  --output 'jsonpath={..current-context}' 2>/dev/null)"
   echo $K8S_PROMPT_CLUSTER
 }
 
 kube_get_ns() {
-  K8S_PROMPT_NAMESPACE="$(kubectl config view --minify  --output 'jsonpath={..namespace}')"
+  K8S_PROMPT_NAMESPACE="$(kubectl config view --minify  --output 'jsonpath={..namespace}' 2>/dev/null)"
   K8S_PROMPT_NAMESPACE="${K8S_PROMPT_NAMESPACE:-default}"
   echo $K8S_PROMPT_NAMESPACE
 }

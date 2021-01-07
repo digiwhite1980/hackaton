@@ -3,17 +3,23 @@ FROM mcr.microsoft.com/azure-cli as base
 FROM base as tools
 
 ENV WORKDIR=/tools
-ENV KUBECTL_VERSION=1.18.8
+ENV KUBECTL_VERSION=1.19.3
 ENV HELM_VERSION=3.3.4
-ENV TERRAFORM_VERSION=0.13.3
-ENV GOTK=0.2.3
-ENV KUSTOMIZE=3.8.6
-ENV YQ_VERSION=3.4.1
+ENV TERRAFORM_VERSION_013=0.13.5
+ENV TERRAFORM_VERSION_012=0.12.20
+ENV DOCKER=17.06.2-ce
+ENV GOTK=0.5.8
+ENV KUSTOMIZE=3.9.1
+ENV YQ=3.4.1
 
 RUN mkdir ${WORKDIR}
 WORKDIR ${WORKDIR}
 # ---------------------------- kubectl 
 RUN curl -L -o kubectl https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+
+# ---------------------------- Docker
+RUN curl -L https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER}.tgz | tar -xz -C /tmp \
+	&& mv /tmp/docker/docker .
 
 # ---------------------------- helm 
 RUN curl -LO https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
@@ -25,8 +31,18 @@ RUN curl -LO https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
 RUN curl \
     --location \
     --output /tmp/terraform.zip \
-    https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
+    https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION_013}/terraform_${TERRAFORM_VERSION_013}_linux_amd64.zip \
+    && unzip /tmp/terraform.zip -d . \
+    && mv terraform terraform_013
+
+RUN curl \
+    --location \
+    --output /tmp/terraform.zip \
+    https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION_012}/terraform_${TERRAFORM_VERSION_012}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d .
+
+# ---------------------------- Jinja2
+RUN pip install j2cli
 
 # ---------------------------- Flux v2 gotk
 RUN curl -LO https://github.com/fluxcd/flux2/releases/download/v${GOTK}/flux_${GOTK}_linux_arm.tar.gz && \
@@ -60,16 +76,19 @@ RUN git clone https://github.com/c-bata/kube-prompt.git kube-prompt-repo && \
 
 RUN chmod 755 *
 
-RUN apk add bash-completion ncurses
+RUN apk add bash-completion ncurses gomplate tmux
 # -----------------------------------------------------------------------------
 FROM base
 
-ENV HOSTNAME=hackaton
+ENV HOSTNAME=tools
 
 COPY --from=tools /tools /usr/local/bin
 COPY --from=tools /etc/profile.d/bash_completion.sh /etc/profile.d
 COPY --from=tools /usr/share/bash-completion/bash_completion /usr/share/bash-completion/bash_completion
 COPY --from=tools /usr/bin/tput /usr/bin
+COPY --from=tools /usr/lib/libevent-2.1.so.7 /usr/lib
+COPY --from=tools /usr/bin/tmux /usr/bin
+COPY --from=tools /usr/bin/gomplate /usr/bin
 COPY bash_prompt.sh /etc/profile.d/bash_prompt.sh
 
 RUN echo "Europe/Amsterdam" >> /etc/timezone && \
