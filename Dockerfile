@@ -90,6 +90,7 @@ COPY --from=tools /usr/bin/tput /usr/bin
 COPY --from=tools /usr/lib/libevent-2.1.so.7 /usr/lib
 COPY --from=tools /usr/bin/tmux /usr/bin
 COPY --from=tools /usr/bin/gomplate /usr/bin
+COPY --from=tools /usr/local/lib/python3.6 /usr/local/lib/python3.6
 COPY bash_prompt.sh /etc/profile.d/bash_prompt.sh
 
 RUN echo "Europe/Amsterdam" >> /etc/timezone && \
