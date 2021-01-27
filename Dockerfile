@@ -44,6 +44,7 @@ RUN curl \
 # ---------------------------- Jinja2
 RUN /usr/local/bin/python -m pip install --upgrade pip && \
 	 pip install -U Jinja2 && \
+	 pip install -U j2cli && \
     cp /usr/local/bin/j2 .
 
 # ---------------------------- Flux v2 gotk
