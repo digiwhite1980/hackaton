@@ -42,7 +42,8 @@ RUN curl \
     && unzip /tmp/terraform.zip -d .
 
 # ---------------------------- Jinja2
-RUN pip install j2cli && \
+RUN /usr/local/bin/python -m pip install --upgrade pip && \
+	 pip install -U Jinja2 && \
     cp /usr/local/bin/j2 .
 
 # ---------------------------- Flux v2 gotk
